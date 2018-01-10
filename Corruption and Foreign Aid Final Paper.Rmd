@@ -1,0 +1,476 @@
+---
+title: Fragmented Aid and Recipient Corruption
+subtitle: Diversity of Aid Partners and Corrupt Recipient Motives
+author:
+- Miles D. Williams
+- University of Illinois at Urbana-Champaign
+output:
+  pdf_document:
+    number_sections: yes
+  html_document: default
+  word_document: default
+fontfamily: mathpazo
+geometry: margin=1in
+header-includes:
+- \usepackage{setspace}
+- \doublespacing
+- \setlength\parindent{24pt}
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \fancyhead[RE]{Williams}
+- \fancyhead[RO]{Williams}
+- \fancyhead[LE]{Fragmented Aid and Recipient Corruption}
+- \fancyhead[LO]{Fragmented Aid and Recipient Corruption}
+fontsize: 12pt
+abstract: This study tests competing hypotheses regarding the impact of recipient corruption on bilateral aid fragmentation. On the one hand, more corrupt recipients may desire a greater diversity of aid partners in order to make misappropriation of aid monies easier. Thus, if they succeed in obtaining their goal, the result should be a more fragmented landscape of bilateral aid flows. On the other hand, more corrupt recipients may fail to attract sufficient donor interest to garner greater diversity of aid partners; they may, in fact, receive less fragmented aid since donors are less likely to crowd-in resources when the recipient is less transparent and reliable in communicating its needs (Davies and Klasen 2017). To test these competing hypotheses, I examine data from 2005 to 2010, the period following the Paris Declaration on Aid Effectiveness, on bilateral aid fragmentation experienced by more than 80 aid recipients. Results support the latter hypothesis; however, the significance of this finding disappears when the outcome variable is operationalized as the average change in aid fragmentation and as the difference in aid fragmentation between 2005 and 2010. This is likely the case because little year-to-year variation in aid fragmentation was observed over this period. Implications of these findings are discussed and suggestions for future research are offered.
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE, fig.pos = "B")
+library(robustbase)
+library(dplyr)
+library(sandwich)
+library(lmtest) 
+library(dotwhisker)
+library(broom)
+```
+
+#Introduction
+In 2005, more than 100 countries committed to the Paris Declaration on Aid Effectiveness, whereby donors and developing countries alike agreed to hold one another accountable for implementing policies that would ensure effective delivery of aid (OECD 2012). Six years following the signing of the Paris Declaration, a final round of the Paris Monitoring Survey revealed that, out of the 13 broad goals established by the Paris Declaration, only one of these goals was met, and only then by a narrow margin (OECD 2012). *Some* progress was made toward the remaining 12 goals; however, much of this progress was at best moderate while most was either mixed or negligible. 
+
+Among those goals that saw little progress was complementarity of aid. In order to counteract the fragmentation of aid flows, donors were to devise a more efficient division of labor and burden sharing. This goal required developing countries to commit to providing clear information for donors to achieve complementarity and for donors to delegate authority to "lead donors" when appropriate. Notwithstanding recent research suggesting that the negative consequences of aid fragmentation may be overstated (or simply untrue) (Gehring et al. 2015), one would be hard pressed to find a solid argument in the literature for why aid fragmentation, in excess, would be of much benefit.
+
+Issues associated with donor coordination certainly comprised one important obstacle towards greater harmonization of aid flows. Recent studies have shown that donors failed to successfully coordinate following the signing of the Paris Declaration and that lead donorship has continued to decline.[^1] Moreover, work by Davies and Klasen (2017) provides robust evidence that there exists a "herding" effect in the bilateral aid allocations of donors, which is especially pronounced in the case of "darling" recipients.
+
+Though not as well explored in the literature, there is reason to suspect that dependence upon recipient cooperation also may have impeded progress on aid harmonization. Discussion on recipient motivations in the literature suggests that recipient government preferences for greater (or, alternatively, reduced) diversity of aid partners may differ depending on the level of recipient corruption. While reliable recipients desire limited diversity of aid partners in order to facilitate easier coordination of aid and thereby a reduction in redundancies and inefficiencies in aid programs, unreliable recipients prefer greater diversity of aid partners because doing so makes it more difficult for any one donor to effectively police the bad behavior of the recipient, making it easier to misappropriate aid monies for private gain.[^2] Might these differences in recipient motives explain some variation in aid fragmentation? 
+
+This paper attempts to answer this question using data on the bilateral aid dispersements of Development Assistance Committee (DAC) members of the Organization for Economic Co-operation and Development (OECD) from 2005 to 2010, the period following the Paris Declaration. This time frame, in theory, provides the optimal window to observe whether recipient government efforts to garner more or less diverse aid flows are successful since donors, as per the details of the Paris agreement, committed to being more responsive to the direction of recipient governments during this period. This time frame, therefore, may have provided corrupt recipient countries with an ideal opportunity to communicate need for greater aid flows and to do so by engaging in diplomacy with as many donors as possible. If successful, corrupt recipients' pursuit of a diversity of aid partners should result in a more fragmented landscape of aid flows. However, if greater donor preference for recipients that reliably and transparently communicate development needs takes precedence over the designs of corrupt recipients, greater recipient corruption may result in less fragmented aid flows. To determine which of these scenarios is the case, I examine the relationship between the average level of corruption, measured using Transparency International's Corruption Perceptions Index (CPI), per foreign aid recipient and, (1) the average level of bilateral aid fragmentation experienced per aid recipient over the 2005 to 2010 period, and (2) the average change in bilateral aid fragmentation experienced per recipient over this same period. 
+
+Results suggest that while more corrupt recipients may desire a greater diversity of aid partners, the level of fragmentation in their bilateral aid flows suggests they fail to achieve this. In fact, more corrupt recipients received significantly less fragmented aid inflows relative to less corrupt recipients between 2005 and 2010. This finding is robust to a number of potentially confounding covariates.
+
+However, findings further indicate that more corrupt recipients did not experience a significant change in aid fragmentation over the 2005 to 2010 period. This null finding likely is a consequence of the fact that levels of aid fragmentation remained largely constant from 2005 to 2010. As a result, few covariates significantly explained variation in the change in aid fragmentation over this period.
+
+Because the relationship between aid fragmentation and recipient corruption has not been well studied more work is required to flesh out whether this pattern is consistent across a larger time frame and across a greater variety of sources of aid. Future work should consider, not only the period preceding the Paris Declaration, but also following it. More recent attempts to promote development cooperation, such as the 2011 Busan Partnership for example, may have impacted the efforts of corrupt recipients in more meaningful ways than did the Paris Declaration. Additionally, though this study considers only the fragmentation of bilateral aid flows, recipients receive aid from several multilateral sources as well. Consideration of such sources might be worth examining, too. Further research might also use alternative aggregate measures of recipient corruption; however, many such measures suffer from limitations similar to those of the CPI---namely, that they better proxy petty bribery than the type of corrupt behavior relevant to this paper (Kenny 2017). A measure of the extent to which recipient governments misappropriate aid monies would be most appropriate; though, such a cross-country measure does not exist at this time.
+
+The following paper proceeds as follows. First, I review the relevant literature on foreign aid and corruption. I then discuss differences in the desires of more versus less corrupt recipient governments concerning diversity of aid partners and develop hypotheses based on this discussion. Next, I describe the data I use to test these hypotheses, and I then discuss the results from my analysis. Finally, I end with concluding remarks on the implications and limitations of my findings and offer suggestions for future research.
+
+[^1]: For examples, see  Nunnenkamp, &Ouml;hler, and Thiele (2013) and Steinwand (2015).
+[^2]: See Davies and Klasen (2017) for a similar discussion of recipient motivations, as well as Kangoye (2013) and Asongu (2014).
+
+# Foreign Aid and Corruption
+Corruption has proven difficult to define, much more to detect. Traditionally, the literature defines corruption as "the abuse of public office for private gain," and most view corruption as detrimental to development (Kauffmann 1997, 114).[^3] Within the context of foreign aid, some worry that the fact that aid monies inevitably end up in the hands of recipient government officials to disperse presents a nontrivial temptation for corrupt behavior (Charron 2011). This concern, in turn, might suggest that donors consider recipient corruption levels when making allocation decisions. In fact, some evidence does suggest that donors (at the very least claim) to take into consideration the level of corruption of recipients. The Millennium Development Goals are just one example (Galtung 2005 and Kenny 2017).
+
+[^3]: Some, however, have argued that corruption's negative effects are not so certain. For only of the earliest arguments to this effect, see Leff (1964).
+
+The relationship between corruption and foreign aid flows has been well assessed in the literature; however, the literature on foreign aid fragmentation and corruption is quite thin. Regarding the former, several studies conducted near the turn of the century failed to find a significant effect of perceived levels of corruption on bilateral aid flows (Svensson 2000; Alesina and Weder 2002; Neumayer 2003a; Neumayer 2003b), whereas a number of studies that followed found a significant, negative relationship (Easterly 2007 and Hout 2007). This effect, however, has been shown to vary depending upon the donor country in question. For example, Alesina and Weder (2002) found that while in aggregate there is no significant relationship between recipient corruption and aid allocation from donors, when donors are considered individually the US appears to give disproportionately more aid to corrupt countries, whereas Scandinavian countries and Australia give disproportionately less. Isopi and Mattesini (2008) found similar evidence that the relationship between donor giving and corruption varies depending on the donor. They found a negative relationship between aid allocated by the UK and recipient corruption, while for the US, Italy, and Finland a positive relationship was observed. Moreover, while Schudel (2008) found a negative relationship between recipient corruption and bilateral aid inflows, this effect was most prominent among the least corrupt donors. 
+
+Later studies have been similarly mixed. Nordveit (2014), for instance, found that better governed countries (as measured by the World Governance Indicators' Government Effectiveness Index) were more apt to obtain, and receive in larger amounts, general budget support. Meanwhile, de la Croix and Delavallande (2013) found that greater corruption levels were associated with more aid because more corrupt countries tend to have lower productivity, which itself is associated with more aid inflows. However, Easterly and Williamson (2011) found that while corrupt recipients were more likely to obtain aid between 1998 and 2008 than between 1984 and 1997, this relationship in fact is not due to donors increasing their aid to more corrupt countries but due to an increase in corruption in some recipients.
+
+As for the literature on aid fragmentation and corruption, no studies (to my knowledge) have examined whether recipient corruption is a significant determinant of aid fragmentation. Extant studies have examined either the consequences of aid fragmentation for recipient outcomes, or, more broadly, the determinants of aid fragmentation from the perspective of donor-side interests. Studies on the former have found that donor fragmentation has negative consequences for recipient bureaucratic quality (Knack and Rahman 2007); however, in terms of the broader implications of aid fragmentation, while many studies have suggested that aid fragmentation retards economic growth and overburdens recipient administrative capacity, a recent analysis by Gehring et al. (2015) failed to obtain robust evidence that such negative consequences constitute a systemic pattern across recipients.[^4] 
+
+The literature on the determinants of aid fragmentation is, though growing, still small. A few studies have examined crowding-in pressures in bilateral aid allocations and have found that there exist herding pressures in the bilateral aid allocations of donors (Berthelmey 2006) and that these pressures are especially pronounced for larger donors and in cases where the recipient is a so-called "darling"---that is, a recipient that provides the most transparent and reliable information about its needs (Davies and Klasen 2017). Furthermore, in a recent study, Steinwand (2015) found evidence that donor fragmentation is most prevalent in cases lacking a lead donor, suggesting that better coordination and donor concentration is best facilitated in the context of lead donorship. Even so, the author found further evidence that the long-term trend for uncoordinated competition among donors has been positive while lead donorship has been on the decline.
+
+[^4]: Gehring et al. (2015) provide a concise review of the literature on the relationship between aid fractionalization and recipient development outcomes.
+
+# Theory and Hypotheses[^5]
+Among the various goals set by the Paris Declaration was the harmonization of aid flows. This entailed the promotion of greater lead donorship and coordination of aid flows to avoid redundancies and inefficiencies created by competing donor development programs. It further placed onus on recipients to better communicate their needs and goals with donors to ensure more efficient provision of aid monies. Since 2005 when the Paris Declaration was signed, research, as well as the 2011 Paris Monitoring Survey (OECD 2012), has revealed that little progress has been made toward most of the goals established by the Paris Declaration. 
+
+The reduction of aid fragmentation was among the goals not achieved. While problems associated with donor coordination certainly may explain part of this failure (see Nunnenkamp, &Ouml;hler, and Thiele 2013 and Steinwand 2015), intentional efforts on the part of recipients to misrepresent their interests also may have stalled progress. The below sections describe relevant recipient and donor interests that may explain some variation in aid fragmentation and why progress in reducing aid fragmentation may have been limited.
+
+## Recipients
+On the recipient side of the equation, recipients may prefer to receive aid from a large enough set of donors to ensure that they have the latitude to negotiate less burdensome conditions on aid monies allocated to their country. At the same time, however, the bureaucratic costs associated with negotiating with a large number of donors may be such that recipients would prefer to avoid having to deal with too many donors. Thus, recipients that want their aid to have the greatest positive impact on development likely prefer donor coordination and a limited diversity of aid partners.
+
+However, recipient preferences for donor coordination may differ among more corrupt recipients who may benefit from less coordination and greater diversity of aid partners. The potential burden created by dealing with a fragmented landscape of aid flows is not a particularly salient concern for this set of recipients because the redundancies and inefficiencies thereby created make misappropriation of aid monies for private gain easier. Though evidence is limited, some research suggests that greater uncertainty in aid flows enables corrupt behavior (Kangoye 2013 and Asongu 2014).
+
+If these differing sets of preferences are real, it is possible that corrupt recipients might use an occasion such as the Paris Declaration to purposefully communicate greater need for aid monies from a more diverse set of donors. If successful, this should result in a more fragmented landscape of bilateral aid flows. This leads to the following hypothesis:
+
+$H_R$: More corrupt recipients receive more fragmented aid flows.
+
+## Donors
+Of course, important to note is the fact that, while recipients may have particular preferences regarding diversity of aid partners, whether these preferences are met hinge on donor interests as well. For example, if the level of recipient corruption is considered by donors when making allocation decisions it could be the case that donor preferences may take precedence over the goals of recipients. In the case of more reliable recipients, donors may view the potential goods, such as recipient development and economic and political influence, gained by aid allocation as greater. It could thus be possible that donors may have less incentive to crowd-in resources when the recipient is corrupt. Some support for this view is provided by the findings of Davies and Klasen (2017) who, as previously mentioned, find that herding among donors is most concentrated in cases where the aid recipient provides reliable and transparent information about its needs. 
+
+If donor preferences take precedence over those of recipients, it is, therefore, possible that corrupt recipients attract a less diverse set of aid partners, much as they would prefer the opposite. Thus, this implies the following counter hypothesis to that proposed above:
+
+$H_D$: More corrupt recipients receive less fragmented aid flows.
+
+[^5]: Discussion of recipient and donor motives in this section is based on a similar discussion in Davies and Klasen (2017).
+
+# Data and Methods
+```{r data}
+data <- read.csv("C:/Users/Miles/Documents/UIUC/Fall 2017 Classes/Corruption/Research Paper/Corruption and Foreign Aid/Book1.csv")
+
+for(i in 9:ncol(data)) { # iterate over column indexes that are present in the passed dataframe that are also included in the fields list
+  data[,i] <- car::recode(data[,i],"lo:0=0")
+}
+#head(data)
+
+data$HHI_05 <- rowSums((data[,9:37]/rowSums(data[,9:37],na.rm=T))^2,na.rm=T)
+data$HHI_06 <- rowSums((data[,(9:37)+29]/rowSums(data[,(9:37)+29],na.rm=T))^2,na.rm=T)
+data$HHI_07 <- rowSums((data[,(9:37)+29*2]/rowSums(data[,(9:37)+29*2],na.rm=T))^2,na.rm=T)
+data$HHI_08 <- rowSums((data[,(9:37)+29*3]/rowSums(data[,(9:37)+29*3],na.rm=T))^2,na.rm=T)
+data$HHI_09 <- rowSums((data[,(9:37)+29*4]/rowSums(data[,(9:37)+29*4],na.rm=T))^2,na.rm=T)
+data$HHI_10 <- rowSums((data[,(9:37)+29*5]/rowSums(data[,(9:37)+29*5],na.rm=T))^2,na.rm=T)
+
+
+data$HHI_av <- rowSums(data[,183:188],na.rm=T)/6
+
+data$n.donors_05 <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$n.donors_05[i] <- sum((data[i,9:37]>0)==1)
+}
+data$n.donors_06 <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$n.donors_06[i] <- sum((data[i,(9:37)+29]>0)==1)
+}
+data$n.donors_07 <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$n.donors_07[i] <- sum((data[i,(9:37)+29*2]>0)==1)
+}
+data$n.donors_08 <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$n.donors_08[i] <- sum((data[i,(9:37)+29*3]>0)==1)
+}
+data$n.donors_09 <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$n.donors_09[i] <- sum((data[i,(9:37)+29*4]>0)==1)
+}
+data$n.donors_10 <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$n.donors_10[i] <- sum((data[i,(9:37)+29*5]>0)==1)
+}
+data$n.donors_av <- rowSums(data[,190:195])/6
+
+paris <- read.csv("C:/Users/Miles/Documents/UIUC/Fall 2017 Classes/Corruption/Research Paper/Corruption and Foreign Aid/Paris Data.csv")
+gdp <- read.csv("C:/Users/Miles/Documents/UIUC/Fall 2017 Classes/Corruption/Research Paper/Corruption and Foreign Aid/GDPpc.csv")
+data <- cbind(data,paris[,-1],gdp[,-1])
+data$GDPpc_av <- rowSums(data[,211:216])/6
+data$AidTot_05 <- rowSums(data[,9:37])
+data$AidTot_06 <- rowSums(data[,(9:37)+29])
+data$AidTot_07 <- rowSums(data[,(9:37)+29*2])
+data$AidTot_08 <- rowSums(data[,(9:37)+29*3])
+data$AidTot_09 <- rowSums(data[,(9:37)+29*4])
+data$AidTot_10 <- rowSums(data[,(9:37)+29*5])
+data$AidTot_av <- rowSums(data[,218:223])/6
+
+data$AidVol <- rep(0,nrow(data))
+for(i in 1:nrow(data)){
+  data$AidVol[i] <- ((data[i,218] - data[i,219])^2 +
+    (data[i,219] - data[i,220])^2 + (data[i,220] - data[i,221])^2 +
+    (data[i,221] - data[i,222])^2 + (data[i,222] - data[i,223])^2)/5
+}
+
+data$d.HHI_av <- ((((1-data$HHI_06)*100) - ((1-data$HHI_05)*100)) + (((1-data$HHI_07)*100) - ((1-data$HHI_06)*100)) +
+  (((1-data$HHI_08)*100) - ((1-data$HHI_07)*100)) + (((1-data$HHI_09)*100) - ((1-data$HHI_08)*100)) + (((1-data$HHI_10)*100) - ((1-data$HHI_09)*100)))/5
+data$pd.HHI_av <- ((((1-data$HHI_06)*100) - ((1-data$HHI_05)*100))/((1-data$HHI_05)*100) + 
+                     (((1-data$HHI_07)*100) - ((1-data$HHI_06)*100))/((1-data$HHI_06)*100) + 
+                     (((1-data$HHI_08)*100) - ((1-data$HHI_07)*100))/((1-data$HHI_07)*100) + 
+                     (((1-data$HHI_09)*100) - ((1-data$HHI_08)*100))/((1-data$HHI_08)*100) + 
+                     (((1-data$HHI_10)*100) - ((1-data$HHI_09)*100))/((1-data$HHI_09)*100))/5
+data$pd.HHI_av[data$pd.HHI_av==Inf] <- NA
+data$pd.HHI_av[data$pd.HHI_av=="NaN"] <- NA
+data$d.HHI_05to10 <- ((1-data$HHI_10)*100) - ((1-data$HHI_05)*100)
+Pop <- read.csv("C:/Users/Miles/Documents/UIUC/Fall 2017 Classes/Corruption/Research Paper/Corruption and Foreign Aid/Pop.csv")
+Pop <- Pop[1:183,]
+data$Pop <- Pop$Pop
+data$Dem <- NA
+data$Dem[Pop$polity2 >= 5] <- 1
+data$Dem[Pop$polity2 < 5] <- 0
+data$Dem[Pop$polity2 == "NA"] <- NA
+data <- data[-105,]
+data <- data[data$n.donors_05 > 5 & data$n.donors_06 > 5 & data$n.donors_07 > 5 & data$n.donors_08 > 5 & data$n.donors_09 > 5 & data$n.donors_10 > 5,]
+```
+To test the above hypotheses, I collected data on the level of corruption and fragmentation of bilateral aid flows, as well as data on possible confounding variables, for up to 117 aid recipient countries from 2005 to 2010. Recipients that received aid from 5 or fewer bilateral donors were excluded from the analysis. The below sections discuss in greater detail how the data were operationalized for use in analysis.
+
+## Explanatory Variables
+
+### Corruption
+My explanatory variable of interest is the level of corruption per aid recipient country. Corruption is generally defined in the literature as the abuse of public office for private gain. This definition is consistent with Transparency International's (TI) Corruption Perceptions Index (CPI), which is one of the most widely used measures of corruption. Though the CPI has received criticism for its multidimensionality (it may measure more than just corruption[^6]) and the possibility that it overestimates corruption,[^7] it nevertheless has proven to be a valuable and useful measure for countless econometric analyses because it provides a relatively consistent cross-country measure of corruption.
+
+I collected CPI scores from 2005 to 2010, and, because scores for this period range from 0 (most corrupt) to 10 (least corrupt), to make interpretation of results more intuitive, I subtracted CPI scores from 10 so that higher scores equal more corruption. Consistent with common practice in the literature, CPI scores for the 2005 to 2010 period were averaged to facilitate cross-sectional analysis. While not all countries in the dataset had a CPI score for every year covered during this period, many had scores for at least or 1 or 2 years. In order to include more cases in the analysis, averages for these countries were included as well, bringing the total number of valid cases up from 97 (if only countries with scores for every year from 2005 to 2010 were included) to 117; however, missing aid data and missing values among the control variables brought the number of valid cases used for model estimation down to 83. 
+
+[^6]: See Neumann and Graeff (2010).
+[^7]: Razafindrakoto and Roubaud (2010) argue that expert perceptions of corruption are likely upward biased. 
+
+### Controls
+To account for the potentially confounding influence of the level of recipient development, the natural log of the average GDP per capita from 2005 to 2010 per recipient was included as a control in model specification.[^8] Development is not only shown to be associated with the level of corruption of a given country (less developed countries tend to have higher measures of corruption), it further may have an impact donor interest.
+
+Another potentially confounding variable is the total number of bilateral donors per recipient. A greater number of donors per recipient likely effects the measure of aid fragmentation used for this study, and this may also be related to the level of corruption per recipient. The average number of DAC donors from which a recipient received aid from 2005 to 2010 was, therefore, included as a control.
+
+The natural log of recipient population as of 2005 (in millions) was also included as a control.[^9] Though some research suggests that the relationship between corruption and population size is minimal when sample selection bias is accounted for, several studies have shown that smaller countries also tend to be less corrupt (Knack and Azfar 2003).  
+
+Finally, because there may be an association between corruption and democratic institutions (see Kolstad and Wiig 2016, among many others), I control for whether the recipient was a democracy using the polity 2 measure from the Polity IV dataset. I coded 1 if a recipient had a polity 2 score of 5 or greater as of 2010 and 0 if otherwise.
+
+[^8]: Data on GDP per capita was obtained from the World Bank.
+[^9]: Data on recipient population was obtained from the Penn World Table, v8.1 (Feenstra, Inklaar, and Timmer 2015).
+
+## Outcome Variables
+
+### Aid Fragmentation
+Aid fragmentation is frequently operationalized in the literature by using a Herfindahl-Hirschmann Index (HHI) like measure of aid share concentration (Steinwand 2015). I take a similar approach, measuring aid fragmentation per foreign aid recipient by taking the square of the proportion $p$ of aid flows from each donor $j$ that allocated aid to a given recipient $i$ in a given year $t$ and summing up across donors. I then subtracted this value from 1 and multiplied by 100, and then I calculated the mean level of aid fragmentation per recipient over the 2005 to 2010 period.[^10]
+
+$$F_{i,t} = \left(1 - \sum_{j=1}^np_{j,i,t}\right) \times 100$$
+
+This measure ranges from 0 to 100, with higher values indicating more fragmentation. Values reflect the probability that if one were to randomly draw two dollars from the total aid flows to a given recipient that the contributing donor of the first dollar would not be the same one that contributed the second dollar.
+
+[^10]: Data on bilateral aid dispersements from 29 DAC countries was obtained from *OECD.stat*.
+
+### Change in Aid Fragmentation
+Change in aid fragmentation is operationalized, both as the average change in aid fragmentation between 2005 and 2010, and as the difference between the level of aid fragmentation in 2010 and 2005.
+
+## Methods
+To test whether greater recipient corruption is associated with greater or less fragmented aid flows, I estimate the following model where the mean level of aid fragmentation experienced by a given recipient from 2005 to 2010 is specified as a function of mean recipient corruption, mean recipient GDP per capita (logged), recipient population (logged), the average number of bilateral donors per recipient, and whether the recipient was a democracy.
+
+  (1) $F_i = \beta_0 + \beta_1Corr_i + \beta_2ln(GDPpc_i) + \beta_3ln(Pop_i) + \beta_4Donors_i + \beta_5Dem_i + \varepsilon_i$
+
+I also estimate an additional two models where the outcome variable is, for the first, the average change in aid fragmentation from 2005 to 2010 and, for the second, the difference in aid fragmentation between 2005 and 2010.
+
+  (2) $\Delta F_i = \gamma_0 + \gamma_1Corr_i + \gamma_2ln(GDPpc_i) + \gamma_3ln(Pop_i) + \gamma_4Donors_i + \gamma_5Dem_i + \upsilon_i$
+  (3) $(F_{i,t=2010} - F_{i,t=2005}) = \delta_0 + \delta_1Corr_i + \delta_2ln(GDPpc_i) + \delta_3ln(Pop_i) + \delta_4Donors_i + \delta_5Dem_i + \nu_i$
+
+To correct for heteroskedasticity in the error term, I use OLS with heteroskedasticity robust standard errors and as well as a robust MM-type estimator as described by Yohai (1987) and Koller and Stahel (2011).[^11]
+
+[^11]: The `lmrob()` function in the `robustbase` package in R was used to estimate robust MM-type regression estimates. The default bi-square redescending score function was used, and robust standard errors as described by Croux, Dhaene, and Hoorelbeke (2003) were computed. For heteroscedasticity robust standard errors for OLS, the `vcovHC()` function was used and the `type` command set to `"HC1"`.
+
+
+# Results and Discussion
+The below sections discuss the findings from analysis of the data. I first provide a summary analysis of the data and examine some simple bivariate relationships. I then turn to the results from estimation of the models specified in the previous section.
+
+## Summary and Bivariate Analysis
+Table 1 displays summary statistics of the variables of interest. There are 117 cases in my dataset for which I have a measure of corruption. The distribution of mean corruption scores during this period is right skewed, with a mean of `r round(mean(10-data$CPI_av,na.rm=T),2)` and median of `r round(median(10-data$CPI_av,na.rm=T))`. The appendix lists these 117 recipients and their mean corruption scores. 
+
+```{r summary, size="small", cache=FALSE, results="asis"}
+Corruption <- 10-data$CPI_av
+`Aid Fragmentation` <- (1-data$HHI_av)*100
+`Change in Fragmentation` <- (data$d.HHI_av)
+
+stargazer::stargazer(data.frame(Corruption, `Aid Fragmentation`,`Change in Fragmentation`),header=FALSE,
+                     covariate.labels = c("Corruption","Aid Fragmentation","Change in Fragmentation"),
+                     title="Summary Statistics",digits=2,digits.extra = 0,median = TRUE)
+```
+
+136 cases in my dataset have a measure of aid fragmentation. Here, again, the distribution is right skewed with a mean of `r round(mean((1-data$HHI_av)*100,na.rm=T),2)` and median of `r round(median((1-data$HHI_av)*100,na.rm=T),2)`. However, the distribution of the change in aid fragmentation is fairly close to normal with mean and median values close to zero and minimum and maximum values of `r round(min(data$d.HHI_av,na.rm=T),2)` and `r round(max(data$d.HHI_av,na.rm=T),2)` respectively. Density plots for each of these variables are shown in figure 1. The appendix lists the mean level of aid fragmentation per each of the 136 cases for which I have data.
+
+```{r density, fig.cap="Density plots of the distribution of the average level of corruption, the average level of aid fragmentation, and average change in aid fragmentation across aid recipients.",fig.height=7,fig.width=7}
+windows()
+g <- ggplot(data=data,aes(10-CPI_av)) + geom_density(fill="grey") +
+  theme_minimal() + xlab("Corruption") + ylab("Density") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+g1 <- ggplot(data=data,aes((1-data$HHI_av)*100)) + geom_density(fill="grey") +
+  theme_minimal() + xlab("Aid Fragmentation") + ylab("Density") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+g2 <- ggplot(data=data,aes(d.HHI_av)) + geom_density(fill="grey") +
+  theme_minimal() + xlab("Change in Aid Fragmentation") + ylab("Density") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+gridExtra::grid.arrange(g,g1,g2,layout_matrix=rbind(c(1,1,2,2),c(NA,3,3,NA)))
+```
+
+```{r trend in aid fragmentation, fig.cap="Variation in aid fragmentation, 2005-2010",fig.height=3.5,fig.width=7}
+HHI <- c((1-data$HHI_05)*100,(1-data$HHI_06)*100,(1-data$HHI_07)*100,(1-data$HHI_08)*100,(1-data$HHI_09)*100,(1-data$HHI_10)*100)
+Year <- c(rep(2005,len=nrow(data)),rep(2006,len=nrow(data)),rep(2007,len=nrow(data)),
+          rep(2008,len=nrow(data)),rep(2009,len=nrow(data)),rep(2010,len=nrow(data)))
+df <- data.frame(HHI,Year)
+windows()
+ggplot(df, aes(x=as.factor(Year),y=HHI)) + geom_boxplot() +
+  geom_jitter(width=.15) +
+  theme_minimal() + ylab("Aid Fragmentation") + xlab("") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+```
+
+```{r corruption and aid fragmentation, fig.cap="Relationship between recipient corruption and aid fragmentation.",fig.height=7,fig.width=7}
+windows()
+g3 <- ggplot(data=data,aes(x=10-CPI_av,y=(1-data$HHI_av)*100)) + geom_point() +
+  geom_smooth(method="lm") + theme_minimal() + ylab("Mean Aid Fragmentation,\n2005-2010") + 
+  xlab("Mean Corruption, 2005-2010") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+g4 <- ggplot(data=data,aes(x=10-CPI_av,y=d.HHI_av)) + geom_point() +
+  geom_smooth(method="lm") + theme_minimal() + ylab("Mean Change in Aid\nFragmentation, 2005-2010") + 
+  xlab("Mean Corruption, 2005-2010") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+g5 <- ggplot(data=data,aes(x=10-CPI_av,y=d.HHI_05to10)) + geom_point() +
+  geom_smooth(method="lm") + theme_minimal() + ylab("Difference in Aid\nFragmentation, 2010 vs. 2005") + 
+  xlab("Mean Corruption, 2005-2010") +
+  theme(text=element_text(family="serif"),
+        axis.text = element_text(color="black"))
+gridExtra::grid.arrange(g3,g4,g5,layout_matrix=rbind(c(1,1,2,2),c(NA,3,3,NA)))
+```
+
+Figure 2 displays a boxplot of variation in aid fragmentation for each year from 2005 to 2010. While within a given year there appears to be a great deal of variation in the level of aid fragmentation across recipients, between years there is very little year-to-year variation. This is not surprising given that the mean of the average change in aid fragmentation from 2005 to 2010 is near zero. 
+
+Figure 3 displays scatterplots of aid fragmentation and corruption. In the first panel (the top left), mean corruption is on the x-axis and mean aid fragmentation on the y-axis. Though there appears to be a negative relationship between corruption and aid fragmentation, the size of this relationship does not appear to be very substantial. Moreover, the relationship displays a fair amount of heteroskedasticity, with the variance in aid fragmentation increasing with greater corruption. 
+
+For the second and third panels, mean change in aid fragmentation and the difference between aid fragmentation in 2010 relative to 2005, respectively, are shown on the y-axis. In both cases the relationship between corruption and change in aid fragmentation looks fairly similar: somewhat flat but with variance in aid fragmentation increasing with greater corruption levels.
+
+## Multiple Regression
+Results from regression models are shown in figures 4-6. Each displays plotted coefficients with 95% confidence intervals. If the 95% confidence intervals intersect with zero on the x-axis (denoted with a solid blue line), the estimated coefficient fails to reach statistical significance at $p < 0.05$. Labels on the x-axis indicate the model number, estimation method used, number of observations, and the adjusted $R^2$ for each model, and labels on the right-hand y-axis are the names of the covariates that correspond to model estimates. 
+
+Figure 4 shows OLS and MM-type estimates for equation 1 along with simple specifications where corruption is the only covariate included. While corruption failed to have a significant relationship with aid fragmentation without the inclusion of controls, the effect of corruption in the fully specified models is statistically significant and negative in support of the second hypothesis $H_D$. Recipient GDP per capita (logged) also has a significant negative relationship with aid fragmentation, as does democracy; though, the coefficient of democracy is only significant with MM-type estimation while it only approaches significance with OLS estimation with heteroskedasticity robust standard errors. The number of donors, unsurprisingly, has a significant positive relationship with aid fragmentation, meanwhile, recipient population has no significant relationship with aid fragmentation. Though the difference in variance explained between estimation methods is not massive, robust estimation provides a better fit for the data, explaining greater variance in aid fragmentation (39% vs. 32%)
+
+```{r coefplot1, fig.cap="Coefficient plot of model estimates.",fig.height=8,fig.width=6}
+lm1 <- lm(I((1-HHI_av)*100) ~ I(10-CPI_av), data=data)
+lm2 <- lm(I((1-HHI_av)*100) ~ I(10-CPI_av) + log(GDPpc_av) + log(Pop) + n.donors_av + Dem,
+               data=data) 
+lm1rse <- tidy(lm1) %>% mutate(std.error=sqrt(diag(vcovHC(lm1,typ="HC1")))) %>%
+  mutate(model="(1)\nOLS (Robust SE)\nN = 117\nAdj. R-squared = 0.0")
+lm2rse <- tidy(lm2) %>% mutate(std.error=sqrt(diag(vcovHC(lm2,typ="HC1")))) %>%
+  mutate(model="(2)\nOLS (Robust SE)\nN = 83\nAdj. R-squared = 0.32")
+rob1 <- tidy(coeftest(lmrob(I((1-HHI_av)*100) ~ I(10-CPI_av), data=data))) %>%
+  mutate(model="(3)\nRobust MM-type\nN = 117\nAdj. R-squared = 0.0")
+rob2 <- tidy(coeftest(lmrob(I((1-HHI_av)*100) ~ I(10-CPI_av) + log(GDPpc_av) + 
+                     log(Pop) + n.donors_av + Dem,data=data))) %>%
+  mutate(model="(4)\nRobust MM-type\nN = 83\nAdj. R-squared = 0.39")
+
+windows()
+rbind(lm1rse,lm2rse,rob1,rob2) %>%
+  relabel_predictors(c(`I(10 - CPI_av)`="Corruption",
+                       `log(GDPpc_av)`="GDP/capita\n(logged)",
+                       `log(Pop)`="Population\n(logged)",
+                       `n.donors_av`="Number of\nDonors",
+                       `Dem`="Democracy")) %>%
+  small_multiple() + theme_bw() + 
+  geom_hline(yintercept = 0,color="blue") +
+  theme(text=element_text(family="serif"),
+        axis.text=element_text(color="black"),
+        legend.position="none",
+        panel.grid.minor = element_blank()) +
+  ylab("Estimated Effect\nOutcome Variable: Mean Aid Fragmentation, 2005-2010") +
+  geom_text(aes(label=round(estimate,2)),size=3,hjust=c(-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3))
+```
+
+Figure 5 shows estimates for equation 2 along with simple specifications with only corruption included as an explanatory variable. Across specifications and estimation techniques, though the sign of the coefficient for corruption is negative (except for model 1), the estimate fails to reach statistical significance. The only covariates to have a significant relationship with change in aid fragmentation are the number of bilateral donors and recipient population; though, neither is significant with the same estimation technique. A greater number of bilateral donors per recipient has a significant positive relationship with change in aid fragmentation with OLS with heteroscedasticity robust standard errors, and larger recipient population has a significant negative relationship with change in aid fragmentation with MM-type estimation. While the model does not perform well with either estimation technique, MM-type estimation explains slightly more variation in change in aid fragmentation.
+
+```{r coefplot2, fig.cap="Coefficient plot of model estimates.",fig.height=8,fig.width=6}
+lm3 <- lm(d.HHI_av ~ I(10-CPI_av), data=data)
+lm4 <- lm(d.HHI_av ~ I(10-CPI_av) + log(GDPpc_av) + log(Pop) + n.donors_av + Dem,
+               data=data) 
+lm3rse <- tidy(lm3) %>% mutate(std.error=sqrt(diag(vcovHC(lm3,typ="HC1")))) %>%
+  mutate(model="(1)\nOLS (Robust SE)\nN = 117\nAdj. R-squared = 0.0")
+lm4rse <- tidy(lm4) %>% mutate(std.error=sqrt(diag(vcovHC(lm4,typ="HC1")))) %>%
+  mutate(model="(2)\nOLS (Robust SE)\nN = 83\nAdj. R-squared = 0.09")
+rob3 <- tidy(coeftest(lmrob(d.HHI_av ~ I(10-CPI_av), data=data))) %>%
+  mutate(model="(3)\nRobust MM-type\nN = 117\nAdj. R-squared = 0.0")
+rob4 <- tidy(coeftest(lmrob(d.HHI_av ~ I(10-CPI_av) + log(GDPpc_av) + 
+                     log(Pop) + n.donors_av + Dem,data=data))) %>%
+  mutate(model="(4)\nRobust MM-type\nN = 83\nAdj. R-squared = 0.14")
+
+windows()
+rbind(lm3rse,lm4rse,rob3,rob4) %>%
+  relabel_predictors(c(`I(10 - CPI_av)`="Corruption",
+                       `log(GDPpc_av)`="GDP/capita\n(logged)",
+                       `log(Pop)`="Population\n(logged)",
+                       `n.donors_av`="Number of\nDonors",
+                       `Dem`="Democracy")) %>%
+  small_multiple() + theme_bw() + 
+  geom_hline(yintercept = 0,color="blue") +
+  theme(text=element_text(family="serif"),
+        axis.text=element_text(color="black"),
+        legend.position="none",
+        panel.grid.minor = element_blank()) +
+  ylab("Estimated Effect\nOutcome Variable: Mean Change in Aid Fragmentation, 2005-2010") +
+  geom_text(aes(label=round(estimate,2)),size=3,hjust=c(-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3))
+```
+
+Figure 6 shows estimates for equation 3 in addition to models specified with only corruption included as an explanatory variable. Though the magnitude of the estimated coefficients is greater relative to those estimated with the previous specification, the results are very similar. Again, corruption fails to have a significant effect, meanwhile, a greater number of bilateral donors is associated with an increase in aid fragmentation from 2005 to 2010 with OLS estimation, while greater recipient population is associated with a decrease in aid fragmentation from 2005 to 2010. None of the estimates for the remaining covariates is statistically significant.
+
+```{r coefplot3, fig.cap="Coefficient plot of model estimates.",fig.height=8,fig.width=6}
+lm5 <- lm(d.HHI_05to10 ~ I(10-CPI_av), data=data)
+lm6 <- lm(d.HHI_05to10 ~ I(10-CPI_av) + log(GDPpc_av) + log(Pop) + n.donors_av + Dem,
+               data=data) 
+lm5rse <- tidy(lm5) %>% mutate(std.error=sqrt(diag(vcovHC(lm5,typ="HC1")))) %>%
+  mutate(model="(1)\nOLS (Robust SE)\nN = 117\nAdj. R-squared = 0.0")
+lm6rse <- tidy(lm6) %>% mutate(std.error=sqrt(diag(vcovHC(lm6,typ="HC1")))) %>%
+  mutate(model="(2)\nOLS (Robust SE)\nN = 83\nAdj. R-squared = 0.09")
+rob5 <- tidy(coeftest(lmrob(d.HHI_05to10 ~ I(10-CPI_av), data=data))) %>%
+  mutate(model="(3)\nRobust MM-type\nN = 117\nAdj. R-squared = 0.0")
+rob6 <- tidy(coeftest(lmrob(d.HHI_05to10 ~ I(10-CPI_av) + log(GDPpc_av) + 
+                     log(Pop) + n.donors_av + Dem,data=data))) %>%
+  mutate(model="(4)\nRobust MM-type\nN = 83\nAdj. R-squared = 0.14")
+
+windows()
+rbind(lm5rse,lm6rse,rob5,rob6) %>%
+  relabel_predictors(c(`I(10 - CPI_av)`="Corruption",
+                       `log(GDPpc_av)`="GDP/capita\n(logged)",
+                       `log(Pop)`="Population\n(logged)",
+                       `n.donors_av`="Number of\nDonors",
+                       `Dem`="Democracy")) %>%
+  small_multiple() + theme_bw() +
+  geom_hline(yintercept = 0,color="blue") +
+  theme(text=element_text(family="serif"),
+        axis.text=element_text(color="black"),
+        legend.position="none",
+        panel.grid.minor = element_blank()) +
+  ylab("Estimated Effect\nOutcome Variable: Change in Aid Fragmentation, 2005-2010") +
+  geom_text(aes(label=round(estimate,2)),size=3,hjust=c(-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3,-.3,-.3,-.3,1.3))
+```
+
+# Conclusion
+When donors and recipients committed to Paris Declaration goals, the former committed to coordinate aid flows, defer to lead donors when necessary, and let recipients take the lead in communicating their needs and informing donors about the optimal role that each might play in contributing to development goals. The latter committed to providing donors with reliable and transparent information about their development needs. While this arrangement could have given corrupt recipients an opportunity to mislead donors and to garner a greater diversity of aid partners, this study's findings suggest that this did not happen. In fact, more corrupt recipients received significantly less fragmented aid flows, suggesting that they failed to obtain more diversity of aid partners. While this finding runs counter to more corrupt recipient interests, it aligns well with the findings of Davies and Klasen (2017) who show that herding pressures in the bilateral giving of donors are especially pronounced in contexts where recipients provide donors with transparent and reliable information. This may indicate that corrupt recipients, whom donors perceive as less likely to provide transparent and reliable information about development needs, may struggle to attract the donor interest needed to give them a more diverse set of aid partners.
+
+The significance of the negative relationship between corruption and aid fragmentation, it is important to note, disappears when aid fragmentation is operationalized as the mean change in aid fragmentation and as the difference in the level of aid fragmentation in 2010 versus 2005. This null finding is likely due to the fact that little meaningful variation in aid fragmentation between 2005 and 2010 was observed. Consequently, many of the other covariates included in model specification failed to have a significant relationship with these outcome variables as well.
+
+Notwithstanding the limitations of this study, this paper contributes to a growing, though still incredibly small, literature on the determinants of aid fragmentation. However, the limited study on aid fragmentation, and far more limited study on the relationship between aid fragmentation and corruption, in the literature ultimately means that more research is required to determine if the findings provided here are consistent across a larger time frame and across a greater variety of sources of aid. Further research should also consider using alternative aggregate measures of recipient corruption; however, the value of doing so is not entirely clear given that many similar measures suffer from the same limitations of the CPI---that they better proxy petty bribery (Kenny 2017) than the type of corrupt behavior relevant to this paper: namely, misappropriation of aid monies by recipient government officials. Using a measure of the level of foreign aid misappropriation might be worth exploring; though, no such measure that would be applicable in a cross-country analysis is available at this time. Moreover, the overall wisdom of such a measure is not terribly certain since, as Kenny (2017) argues, efforts to measure recipient corruption are often counterproductive from a policy perspective. This is not to say that the CPI (or other aggregate measures) are not correlated with corrupt use of aid monies; only that the expert surveys used to create the CPI are not designed to measure this type of corruption in particular. However, for the time being, researchers may have to content themselves with indeces like the CPI since they are, despite their limitations, among the best cross-country measures currently available. And so, future studies that examine the relationship between corruption and aid fragmentation likely will have to continue to use aggregate measures of corruption until such time that a better measure comes along.
+
+# Appendix
+The below figures display the names of the recipients for which data on corruption and on aid fragmentation were available for 2005 to 2010. Countries are ordered from those with the most corruption (and with the most fragmented aid) to those with the leas corruption (and with the least fragmented aid).
+
+```{r recipients and corruption, fig.cap="Mean corruption scores per recipient country.",fig.width=7,fig.height=8.5}
+windows()
+data %>% filter(10-CPI_av > 0) %>%
+  ggplot(aes(x=10-CPI_av,y=reorder(Recipient,10-CPI_av))) +
+  theme_minimal() +
+  geom_point() + xlab("Mean Corruption, 2005-2010") +
+  ylab("") + theme(text=element_text(family="serif"),
+                   axis.text=element_text(color="black"),
+                   axis.text.y=element_text(size=5),
+                   panel.grid.minor.y=element_blank())
+```
+
+```{r recipients and aid fragmentation, fig.cap="Mean aid fragmentation per recipient country.",fig.width=7,fig.height=8.5}
+windows()
+data %>% filter((1-HHI_av)*100 > 0) %>%
+  ggplot(aes(x=(1-HHI_av)*100,y=reorder(Recipient,(1-HHI_av)*100))) +
+  theme_minimal() +
+  geom_point() + xlab("Mean Aid Fragmentation, 2005-2010") +
+  ylab("") + theme(text=element_text(family="serif"),
+                   axis.text=element_text(color="black"),
+                   axis.text.y=element_text(size=5),
+                   panel.grid.minor.y=element_blank())
+```
+
+\newpage
+# References
+  - Alesina, A., and B. Weder. 2002. “Do Corrupt Governments Receive Less Foreign Aid?”  *American Economic Review* 92(4): 1126-1137.
+  - Asongu, Simplice. 2014. “On Foreign Aid Distortions to Governance.” MPRA Working Paper No. 56812.
+  - Berthelemy, J.C. 2006. “Bilateral Donors’ Interest vs. Recipients’ Development Motives in Aid Allocation: Do All Donors Behave the Same?” *Review of Development Economics* 10(2): 179-194.
+  - Charron, Nicholas. 2011. “Exploring the Impact of Foreign Aid on Corruption: Has the ‘Anti-Corruption Movement’ Been Effective?” *The Developing Economies* 49(1): 66-88.
+  - Davies, Ronald B., and Stephan Klasen. 2017. “Darlings and Orphans: Interactions across Donors in International Aid.” *The Scandinavian Journal of Economics.* Forthcoming.
+  - de la Croix, D., and C. Delavallade. 2013. “Why Corrupt Governments May Receive More Foreign Aid.” *Oxford Economic Papers* 66(1): 51-66.
+  - Easterly, W. 2007. “Are Aid Agencies Improving?” *Economic Policy* 22(52): 633-678
+  - Easterly, W., and C. Williamson. 2011. “Rhetoric versus Reality: The Best and Worst of Aid Agency Practices.” *World Development* 39(11): 1930-1949.
+  - Feenstra, Robert C., Robert Inklaar, and Marcel P. Timmer. 2015. "The Next Generation of the Penn World Table."  *American Economic Review.* Forthcoming.
+  - Galtung, Fredrik. 2005. “Measuring the Immeasurable: Boundaries and Functions of (Macro) Corruption Indices.” In *Measuring Corruption.* Fredrik Galtung and Charles Sampford, Eds. London: Ashgate.
+  - Gehring, Kai, Katharina Michaelowa, Axel Dreher, and Franziska Sporri. 2015. “Do We Know What We Think We Know? Aid Fragmentation and Effectiveness Revisited.” Courant Research Center Discussion Paper No. 185.
+  - Hout, W. 2007. *The Politics of Aid Selectivity: Good Governance Criteria in World Bank, U.S. and Dutch Development Assistance.* New York: Routledge.
+  - Isopi, A., and F. Mattesini. 2008. “Aid and Corruption: Do Donors Use Development Assistance to Provide the ‘Right’ Incentives?” Centre for Economic and International Studies Tor Vergata Working Paper No. 6/6/121.
+  - Kangoye, Thierry. 2013. “Does Aid Unpredictability Weaken Governance? Evidence from Developing Countries.” *The Developing Economies* 51(2): 121-144.
+  - Kaufmann, Daniel. 1997. “Corruption: The Facts.” *Foreign Policy* 107(summer): 114-131.
+  - Kenny, Charles. 2017. *Results Not Receipts: Counting the Right Things in Aid and Corruption.* Washington, D.C.: Center for Global Development.
+  - Knack, Stephen, and Aminur Rahman. 2007. “Donor Fragmentation and Bureaucratic Quality in Aid Recipients.” *Journal of Development Economics* 83: 176-197.
+  - Knack, S. and O. Azfar. 2003. "Trade Intensity, Country Size and Corruption." *Economics of Governance* 4(1):1–18.
+  - Kolstad, Ivar, and Arne Wiig. 2016. "Does Democracy Reduce Corruption?" *Democratization* 23(7): 1198-1215.
+  - Leff, Nathaniel. 1964. “Economic Development through Bureaucratic Corruption.” *American Behavioral Scientist* 8: 8-14.
+  - Marshall, Monty G., Ted Robert Gurr, and Keith Jaggers. 2015. “Polity IV Project: Political Regime Characteristics and Transitions, 1800-2014.” *Center for Systemic Peace.*
+  - Neumayer, E. 2003a. “The Determinants of Aid Allocation by Regional Multilateral Development Banks and United Nations Agencies.” *International Studies Quarterly* 47: 101-122.
+  - --. 2003b. *The Patterns of Aid Giving: The Impact of Good Governance on Development Assistance.* New York: Routledge.
+  - Nordveit, I. 2014. “Partner Country Ownership: Does Better Governance and Commitment to Development Attract General Budget Support?” University of Bergen Working Papers in Economics No. 2114.
+  - Nunnenkamp, Peter, Hannes Ohler, and Rainer Thiele. 2013. “Donor Coordination and Specialization: Did the Paris Declaration Make a Difference?” *Review of World Economics* 149: 537-563.
+  - OECD. 2012. *Aid Effectiveness 2011: Progress in Implementing the Paris Declaration.* Paris: OECD Publishing.
+  - --. 2017. *Aid (ODA) disbursements to countries and regions* [DAC2a].
+  - Schudel. C.J.W. 2008. “Corruption and Bilateral Aid: A Dyadic Approach.” *Journal of Conflict Resolution* 52(4): 507-526.
+  - Steinwand, Martin C. 2015. “Compete or Coordinate? Aid Fragmentation and Lead Donorship.” *International Organization* 69(2): 443-472.
+  - Svensson, J. 2000. “Foreign Aid and Rent-Seeking.” *Journal of International Economics* 51: 437-461.
